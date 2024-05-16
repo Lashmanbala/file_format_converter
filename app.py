@@ -37,3 +37,10 @@ for file in src_file_names:
     df = pd.read_csv(file, names=clms)
     print(df.shape)
 
+# creating target files to write json file
+tgt_base_dir = 'data/retail_db_json'
+for file in src_file_names:
+    ds_name = file.split('/')[-1]
+    file_name = file.split('/')[-2]
+    print(f'{tgt_base_dir}/{file_name}/{ds_name}')
+    os.makedirs(f'{tgt_base_dir}/{file_name}/{ds_name}', exist_ok=True)
