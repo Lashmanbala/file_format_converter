@@ -3,7 +3,6 @@ import json
 import pandas as pd
 import os
 
-src_file_names = glob.glob('data/retail_db/*/part-*', recursive=True) 
 
 def get_column_details(schema,ds_name,sorting_key='column_position'):
     column_details = schema[ds_name]
@@ -24,7 +23,7 @@ def to_json(df, tgt_base_dir, ds_name, file_name):
     os.makedirs(f'{tgt_base_dir}/{ds_name}')
     df.to_json(json_file_path, orient='records', lines=True)
 
-def file_converter(ds_name, tgt_base_dir='data/retail_db_json', src_base_dir='data/retail_db'):
+def file_converter(ds_name, src_base_dir, tgt_base_dir):
     files = glob.glob(f'{src_base_dir}/{ds_name}/part-*')
     schema = json.load(open(f'{src_base_dir}/schemas.json'))
 
@@ -32,7 +31,16 @@ def file_converter(ds_name, tgt_base_dir='data/retail_db_json', src_base_dir='da
         df = read_csv(file, schema)
         file_name = file.split('/')[-1]
         to_json(df, tgt_base_dir, ds_name, file_name)
-        print('success')
 
-ds_name = 'categories'
-file_converter(ds_name)
+def process_files(ds_name=None):
+    src_base_dir='data/retail_db'
+    tgt_base_dir='data/retail_db_json'
+    schema = json.load(open(f'{src_base_dir}/schemas.json'))
+
+    if not ds_name:
+        ds_names = schema.keys()
+    for ds_name in ds_names:
+        print(f'processing{ds_name}')
+        file_converter(ds_name, src_base_dir, tgt_base_dir)
+
+process_files()
