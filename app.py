@@ -46,5 +46,8 @@ def process_files(ds_names=None):
         file_converter(ds_name, src_base_dir, tgt_base_dir)
 
 if __name__ == '__main__':
-    ds_names = json.loads(sys.argv[1])  # run time args should be in json array format. Ex:'[\"categories\", \"products\"]'
-    process_files(ds_names)
+    if len(sys.argv) == 0:
+        ds_names = sys.argv[1]  # argv returns a list with the filename and arguments as its elements. # run time args should be in array format. Ex:'["categories", "products"]'
+        process_files(ds_names)
+    else:
+        process_files()
