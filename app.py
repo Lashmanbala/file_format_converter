@@ -2,6 +2,7 @@ import glob
 import json
 import pandas as pd
 import os
+from dotenv import load_dotenv
 
 
 def get_column_details(schema,ds_name,sorting_key='column_position'):
@@ -9,7 +10,6 @@ def get_column_details(schema,ds_name,sorting_key='column_position'):
     columns = sorted(column_details, key=lambda col:col[sorting_key])
     return [col['column_name'] for col in columns]
 
-# reading all the files dynamically
 def read_csv(file, schema):
     file_path_list = file.split('/')
     ds_name = file_path_list[-2]
@@ -33,14 +33,15 @@ def file_converter(ds_name, src_base_dir, tgt_base_dir):
         to_json(df, tgt_base_dir, ds_name, file_name)
 
 def process_files(ds_name=None):
-    src_base_dir='data/retail_db'
-    tgt_base_dir='data/retail_db_json'
+    load_dotenv()
+    src_base_dir=os.environ.get('SRC_BASE_DIR')
+    tgt_base_dir=os.environ.get('TGT_BASE_DIR')
     schema = json.load(open(f'{src_base_dir}/schemas.json'))
 
     if not ds_name:
         ds_names = schema.keys()
     for ds_name in ds_names:
-        print(f'processing{ds_name}')
+        print(f'processing {ds_name}')
         file_converter(ds_name, src_base_dir, tgt_base_dir)
 
 process_files()
