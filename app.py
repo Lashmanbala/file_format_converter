@@ -28,6 +28,8 @@ def file_converter(ds_name, src_base_dir, tgt_base_dir):
     files = glob.glob(f'{src_base_dir}/{ds_name}/part-*')
     schema = json.load(open(f'{src_base_dir}/schemas.json'))
 
+    if len(files) == 0:       # glob.glob returns a list
+        raise NameError(f'No files found for {ds_name}')
     for file in files:
         df = read_csv(file, schema)
         file_name = file.split('/')[-1]
@@ -42,12 +44,18 @@ def process_files(ds_names=None):
     if not ds_names:
         ds_names = schema.keys()
     for ds_name in ds_names:
-        print(f'processing {ds_name}')
-        file_converter(ds_name, src_base_dir, tgt_base_dir)
+        try:
+            print(f'processing {ds_name}')
+            file_converter(ds_name, src_base_dir, tgt_base_dir)
+        except NameError as ne:
+            print(ne)
+            print(f'Error processing {ds_name}')
+            pass
 
 if __name__ == '__main__':
-    if len(sys.argv) == 0:
-        ds_names = sys.argv[1]  # argv returns a list with the filename and arguments as its elements. # run time args should be in array format. Ex:'["categories", "products"]'
+    if len(sys.argv) == 2:
+        ds_names = json.loads(sys.argv[1])  # argv returns a list with the filename and arguments as its elements.
+        # run time args should be in json array format. Ex:'["categories", "products"]' Ex:  "[\"categories\",\"product\",\"departments\"]"
         process_files(ds_names)
     else:
         process_files()
