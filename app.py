@@ -55,7 +55,8 @@ def process_files(ds_names=None):
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         ds_names = json.loads(sys.argv[1])  # argv returns a list with the filename and arguments as its elements.
-        # run time args should be in json array format. Ex:'["categories", "products"]' Ex:  "[\"categories\",\"product\",\"departments\"]"
+                                            # run time args should be in json array format. 
+                                            # Ex:'["categories", "products"]'  Ex: "[\"categories\",\"product\",\"departments\"]"
         process_files(ds_names)
     else:
         process_files()
