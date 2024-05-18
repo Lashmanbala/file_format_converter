@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import os
 from dotenv import load_dotenv
+import sys
 
 
 def get_column_details(schema,ds_name,sorting_key='column_position'):
@@ -32,16 +33,18 @@ def file_converter(ds_name, src_base_dir, tgt_base_dir):
         file_name = file.split('/')[-1]
         to_json(df, tgt_base_dir, ds_name, file_name)
 
-def process_files(ds_name=None):
+def process_files(ds_names=None):
     load_dotenv()
     src_base_dir=os.environ.get('SRC_BASE_DIR')
     tgt_base_dir=os.environ.get('TGT_BASE_DIR')
     schema = json.load(open(f'{src_base_dir}/schemas.json'))
 
-    if not ds_name:
+    if not ds_names:
         ds_names = schema.keys()
     for ds_name in ds_names:
         print(f'processing {ds_name}')
         file_converter(ds_name, src_base_dir, tgt_base_dir)
 
-process_files()
+if __name__ == '__main__':
+    ds_names = json.loads(sys.argv[1])  # run time args should be in json array format. Ex:'[\"categories\", \"products\"]'
+    process_files(ds_names)
