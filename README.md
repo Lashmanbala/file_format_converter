@@ -7,8 +7,6 @@
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Supported Formats](#supported-formats)
-- [Examples](#examples)
-- [Contributing](#contributing)
 - [Contact](#contact)
 
 ## Description
@@ -24,7 +22,7 @@ The File Format Converter is a Python application designed to convert CSV files 
 ### Prerequisites
 - Python 3.6 or higher
 - pip (Python package installer)
-- [dotenv](https://pypi.org/project/python-dotenv/) for managing environment variables
+- dotenv for managing environment variables
 
 ### Steps
 1. Clone the repository:
@@ -48,3 +46,26 @@ The File Format Converter is a Python application designed to convert CSV files 
 To convert CSV files to JSON format, use the following command:
 ```bash
 python app.py '["dataset1", "dataset2"]'
+```
+- Replace ["dataset1", "dataset2"] with the list of datasets you want to process.
+## Example
+To convert the categories and products datasets:
+```bash
+python app.py '["categories", "products"]'
+```
+If you want to process all datasets defined in schemas.json, simply run:
+```bash
+python app.py
+```
+## Configuration
+### Schema Definition
+The schema for each dataset should be defined in schemas.json located in the source base directory. Each dataset's schema should specify the column names and their positions.
+### Supported Formats
+- Input: CSV
+- Output: JSON
+## Contact
+For any questions, issues, or suggestions, please feel free to contact the project maintainer:
+
+GitHub: [Lashmanbala](https://github.com/Lashmanbala)
+
+LinkedIn: [Lashmanbala](https://www.linkedin.com/in/lashmanbala/)
