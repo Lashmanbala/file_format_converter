@@ -5,6 +5,7 @@
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Example](#Example)
 - [Configuration](#configuration)
 - [Supported Formats](#supported-formats)
 - [Contact](#contact)
@@ -48,6 +49,7 @@ To convert CSV files to JSON format, use the following command:
 python app.py '["dataset1", "dataset2"]'
 ```
 - Replace ["dataset1", "dataset2"] with the list of datasets you want to process.
+
 ## Example
 To convert the categories and products datasets:
 ```bash
