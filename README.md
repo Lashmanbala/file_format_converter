@@ -21,7 +21,7 @@ The File Format Converter is a Python application designed to convert CSV files 
 
 ## Installation
 ### Prerequisites
-- Python 3.6 or higher
+- Python 3.10
 - pip (Python package installer)
 - dotenv for managing environment variables
 
